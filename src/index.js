@@ -140,7 +140,7 @@ function onPaginationBtnClick(e) {
         })
         .then(photos => createPhotoCard(photos.hits))            
         .then(markup => addMarkupToGalery(markup))
-        .catch(error => { throw new Error })
+        .catch(error => alert('Whoops, something wrong((( Please, try again)'))
     
 }
 

@@ -6,14 +6,14 @@ import SimpleLightbox from 'simplelightbox';
 export function createPhotoCard(photos) {
     return photos.map(p => 
     `
-    <div>
-    <a class="gallery__link" href="${p.webformatURL}" onclick="return false">
+    
+    <a class="gallery__link" href="${p.largeImageURL}" onclick="return false">
     <div>
     
     
   <img alt="${p.tags}" loading="lazy" class="gallery__image" 
   src="${p.previewURL}"
-  data-source="${p.webformatURL}"
+  data-source="${p.largeImageURL}"
   />
   
   <div class="info">
@@ -36,7 +36,7 @@ export function createPhotoCard(photos) {
   </div>
   </div>
   </a>
-  </div>
+  
 
     `
     ).join('')
