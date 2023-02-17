@@ -1,7 +1,3 @@
-import "simplelightbox/dist/simple-lightbox.min.css";
-import SimpleLightbox from 'simplelightbox';
-
-
 
 export function createPhotoCard(photos) {
     return photos.map(p => 
@@ -34,15 +30,10 @@ export function createPhotoCard(photos) {
   </div>
   
   </a>
-  
-
     `
     ).join('')
     
 }
 
-new SimpleLightbox(".gallery a", {
-    captionsData: "alt",
-     captionDelay: 250,
-     })
+
 

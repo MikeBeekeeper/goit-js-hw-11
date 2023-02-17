@@ -164,7 +164,10 @@ function addMarkupToGalery(markup) {
 //   behavior: "smooth",
 // });
 
-
+new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+     captionDelay: 250,
+     })
 
 
 Notiflix.Notify.init({
