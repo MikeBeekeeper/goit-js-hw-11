@@ -58,7 +58,7 @@ let numberOfPage = 1;
 // }
 
 function onSubmit() { 
-     event.preventDefault();
+    event.preventDefault();
      removeVisibleClsOfPaginationBtn();
      resetGaleryMarkup();
      submitBtn.disabled = true;
