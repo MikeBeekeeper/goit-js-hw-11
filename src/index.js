@@ -182,4 +182,4 @@ Notiflix.Notify.init({
 // window.scrollBy({
 //   top: cardHeight * 2,
 //   behavior: "smooth",
-// });
+// });a
