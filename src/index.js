@@ -10,6 +10,10 @@ const photoGalery = document.querySelector(".gallery");
 const searchFormEl = document.querySelector(".search-form")
 const searchFormInputEl = document.querySelector(".search-form__input");
 const paginatioBtnEl = document.querySelector(".load-more")
+const gallery = new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+     captionDelay: 250,
+     })
 
 searchFormEl.addEventListener('submit', onSubmit);
 searchFormEl.addEventListener('keydown', (e) => {
@@ -59,8 +63,8 @@ let numberOfPage = 1;
 
 function onSubmit() { 
     event.preventDefault();
-     removeVisibleClsOfPaginationBtn();
-     resetGaleryMarkup();
+    removeVisibleClsOfPaginationBtn();
+    gallery.refresh();
      submitBtn.disabled = true;
     numberOfPage = 1;
     
@@ -82,7 +86,9 @@ function onSubmit() {
             if(markup) addVisibleClsToPaginationBtn();          
         })
         .catch(error => console.log(error))
-    .finally(() => searchFormInputEl.value = '')
+    .finally(() => gallery.refresh() )
+
+    // .finally(() => searchFormInputEl.value = '')
 }
 
 
@@ -147,27 +153,11 @@ function onPaginationBtnClick(e) {
 function updateGaleryMarkup(markup) {
     photoGalery.innerHTML = markup
 }
-function resetGaleryMarkup() {
-    photoGalery.innerHTML = ''
-}
 
 function addMarkupToGalery(markup) {
     photoGalery.insertAdjacentHTML('beforeend', markup)
 }
 
-// const { height: cardHeight } = document
-//   .querySelector(".gallery")
-//   .firstElementChild.getBoundingClientRect();
-
-// window.scrollBy({
-//   top: cardHeight * 2,
-//   behavior: "smooth",
-// });
-
-new SimpleLightbox(".gallery a", {
-    captionsData: "alt",
-     captionDelay: 250,
-     })
 
 
 Notiflix.Notify.init({
@@ -184,3 +174,12 @@ Notiflix.Notify.init({
         background: '#e90c0c',      
     }
 });
+
+// const { height: cardHeight } = document
+//   .querySelector(".gallery")
+//   .firstElementChild.getBoundingClientRect();
+
+// window.scrollBy({
+//   top: cardHeight * 2,
+//   behavior: "smooth",
+// });
