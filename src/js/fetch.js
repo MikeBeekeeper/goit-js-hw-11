@@ -16,11 +16,15 @@ const searchOptions = 'image_type=photo&orientation=horizontal&safesearch=true';
 
 export default async function fetchPhotos(query, page) {
     const URL = `${ENDPOINT}/?key=${KEY}&q=${query}&${searchOptions}&page=${page}&per_page=40`;
-    const response = await fetch(URL)
-        .then(response => {
-            if (response.status !== 200 || response.data.hits.length === 0) {
+    
+    return await axios.get(URL)
+.then(response => {
+if (response.status !== 200 || response.data.hits.length === 0) {
 throw new Error(response.status)
 }
-return response.data
-        })
+return response.data;
+})
 }
+
+
+
