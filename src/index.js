@@ -31,7 +31,7 @@ function onSubmit() {
      submitBtn.disabled = true;
     numberOfPage = 1;
     
-    fetchPhotos(searchQuery,numberOfPage)
+    fetchPhotos(searchQuery, numberOfPage)
     .then(photos => {
             totalMatches = photos.hits.length
             
