@@ -18,9 +18,9 @@ export default async function fetchPhotos(query, page) {
     const URL = `${ENDPOINT}/?key=${KEY}&q=${query}&${searchOptions}&page=${page}&per_page=40`;
     const response = await fetch(URL)
         .then(response => {
-            if (!response.ok) {
-                Notiflix.Notify.failure('Sorry, there are no images matching your search query.Please try again.')
-            }
-            return response.json();
+            if (response.status !== 200 || response.data.hits.length === 0) {
+throw new Error(response.status)
+}
+return response.data
         })
 }
