@@ -27,26 +27,28 @@ let numberOfPage = 1;
 
 function onSubmit() { 
     event.preventDefault();
-    removeVisibleClsOfPaginationBtn();
+    addVisibleClsToPaginationBtn()
+    paginatioBtnEl.textContent = "Loading";
      submitBtn.disabled = true;
     numberOfPage = 1;
     
     fetchPhotos(searchQuery, numberOfPage)
-    .then(photos => {
-            totalMatches = photos.hits.length
-            
-            if (photos.hits.length === 0) {
+        .then(response => {
+            const photos = response.data.hits;
+            const totalHits = response.data.totalHits
+            totalMatches = photos.length
+            if (photos.length === 0) {
                 removeVisibleClsOfPaginationBtn();
                 Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.')               
             } 
-            if (photos.hits.length !== 0) {
-                Notiflix.Notify.success(`Hooray! We found ${photos.totalHits} images.`)
+            if (photos.length !== 0) {
+                Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`)
             }           
-            return createPhotoCard(photos.hits)
+            return createPhotoCard(photos)
         })
         .then(markup => {          
             updateGaleryMarkup(markup);
-            if(markup) addVisibleClsToPaginationBtn();          
+            if(markup) paginatioBtnEl.textContent = "Load more";          
         })
         .catch(error => console.log(error))
     .finally(() => gallery.refresh() )
@@ -74,18 +76,26 @@ let totalMatches = 0;
 
 function onPaginationBtnClick(e) {    
     numberOfPage += 1;
+    paginatioBtnEl.disabled = true;
     fetchPhotos(searchQuery,numberOfPage)
-        .then(photos => {
-            totalMatches += photos.hits.length            
-            if (totalMatches >= photos.totalHits || totalMatches === 0) {
+        .then(response => {
+            const photos = response.data.hits;
+            const totalHits = response.data.totalHits;
+            totalMatches += photos.length            
+            if (totalMatches >= totalHits || totalMatches === 0) {
                 Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.")
                 removeVisibleClsOfPaginationBtn()
             }            
             return photos
         })
-        .then(photos => createPhotoCard(photos.hits))            
-        .then(markup => addMarkupToGalery(markup))
+        .then(photos => createPhotoCard(photos))            
+        .then(markup => {
+            addMarkupToGalery(markup)
+            paginatioBtnEl.disabled = false;
+        })       
         .catch(error => alert('Whoops, something wrong((( Please, try again)'))
+        .finally(() => gallery.refresh() )
+
     
 }
 
